@@ -4,6 +4,40 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-navy: oklch(0.22 0.07 258);
+  --color-navy-deep: oklch(0.16 0.06 262);
+  --color-royal: oklch(0.52 0.19 262);
+  --color-cyan-accent: oklch(0.78 0.14 210);
+  --color-whatsapp: oklch(0.68 0.16 152);
+  --color-gold: oklch(0.83 0.15 85);
+}
+
+@utility surface-gradient {
+  background-image: linear-gradient(135deg, var(--color-navy-deep), var(--color-navy) 55%, var(--color-royal));
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(100deg, var(--color-cyan-accent), oklch(0.9 0.05 230));
+  background-clip: text;
+  color: transparent;
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
 /*
  * Design system definition.
  *
