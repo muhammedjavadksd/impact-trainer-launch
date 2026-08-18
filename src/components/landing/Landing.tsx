@@ -47,6 +47,8 @@ import { WA_MESSAGES, PHONE, waLink, callLink, trackCta } from "@/lib/whatsapp";
 import photo1 from "@/assets/batch-photo-1.jpg";
 import photo2 from "@/assets/batch-photo-2.jpg";
 import mentorSuhail from "@/assets/mentor-suhail.png";
+import mentorShahidh from "@/assets/mentor-shahidh.jpg";
+import mentorTrainer3 from "@/assets/mentor-trainer-3.jpg";
 
 const NAV = [
   { label: "About", href: "#about" },
@@ -570,7 +572,7 @@ const BONUSES = [
   "Teachers' Training",
   "Public Speaking",
   "Online Icebreakers & Energizers",
-  "Corporate Train The Trainer",
+  "Corporate Train The Trainer Program",
   "Effective Parenting",
   "Presentation Skills",
   "Mentoring Skills",
@@ -745,18 +747,25 @@ function Mentors() {
       initials: "SC",
     },
     {
-      role: "Co-Faculty",
-      name: "Mark Team Members",
-      desc: "Senior Trainers, Counsellors & Motivators",
-      photo: null,
-      initials: "MT",
+      role: "Corporate Trainer",
+      name: "Shahidh Mohammed",
+      desc: "",
+      photo: mentorShahidh,
+      initials: "SM",
+    },
+    {
+      role: "Linguistic Coach",
+      name: "Reshma CJ",
+      desc: "",
+      photo: mentorTrainer3,
+      initials: "RC",
     },
   ];
   return (
     <section className="bg-secondary py-20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading eyebrow="Mentors" title="Learn from experienced trainers" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {mentors.map((m, i) => (
             <Reveal key={m.name} delay={i * 100}>
               <div className="h-full overflow-hidden rounded-3xl border-2 border-border bg-card">
@@ -781,7 +790,7 @@ function Mentors() {
                     {m.role}
                   </p>
                   <h3 className="mt-1 font-display text-xl font-bold text-navy-deep">{m.name}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{m.desc}</p>
+                  {m.desc && <p className="mt-1 text-sm text-muted-foreground">{m.desc}</p>}
                 </div>
               </div>
             </Reveal>
