@@ -46,6 +46,8 @@ import { Reveal, WhatsAppCta, SectionHeading } from "./primitives";
 import { WA_MESSAGES, PHONE, waLink, callLink, trackCta } from "@/lib/whatsapp";
 import photo1 from "@/assets/batch-photo-1.jpg";
 import photo2 from "@/assets/batch-photo-2.jpg";
+import photo3 from "@/assets/batch-photo-3.jpg";
+import photo4 from "@/assets/batch-photo-4.jpg";
 import mentorSuhail from "@/assets/mentor-suhail.png";
 import mentorShahidh from "@/assets/mentor-shahidh.jpg";
 import mentorTrainer3 from "@/assets/mentor-trainer-3.jpg";
@@ -66,6 +68,8 @@ const PHOTOS = [
     src: photo2,
     alt: "Trainers, teachers and professionals at a Train the Trainer Program batch",
   },
+  { src: photo3, alt: "Previous batch participants group photo indoors" },
+  { src: photo4, alt: "Previous batch participants group photo, panoramic view" },
 ];
 
 function Nav() {
@@ -164,6 +168,23 @@ function Hero({ heroRef }: { heroRef: RefObject<HTMLElement | null> }) {
 }
 
 function SocialProof() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+  const indexRef = useRef(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const id = setInterval(() => {
+      if (pausedRef.current) return;
+      const slides = Array.from(track.children) as HTMLElement[];
+      indexRef.current = (indexRef.current + 1) % slides.length;
+      const next = slides[indexRef.current];
+      if (next) track.scrollTo({ left: next.offsetLeft, behavior: "smooth" });
+    }, 3200);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -172,12 +193,19 @@ function SocialProof() {
           title="Real people. Real batches."
           sub="People from different professions have already experienced the program."
         />
-        <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-2 lg:overflow-visible">
+        <div
+          ref={trackRef}
+          onMouseEnter={() => (pausedRef.current = true)}
+          onMouseLeave={() => (pausedRef.current = false)}
+          onTouchStart={() => (pausedRef.current = true)}
+          onTouchEnd={() => (pausedRef.current = false)}
+          className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-4"
+        >
           {PHOTOS.map((p, i) => (
             <Reveal
               key={p.src}
               delay={i * 80}
-              className="w-[85vw] shrink-0 snap-center sm:w-[65vw] lg:w-auto"
+              className="w-[85vw] shrink-0 snap-center sm:w-[55vw] lg:w-[31%]"
             >
               <img
                 src={p.src}
