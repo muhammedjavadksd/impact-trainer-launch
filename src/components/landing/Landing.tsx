@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -6,7 +6,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  Menu,
   X,
   Check,
   ArrowRight,
@@ -44,17 +43,9 @@ import {
   Radio,
 } from "lucide-react";
 import { Reveal, WhatsAppCta, SectionHeading } from "./primitives";
-import {
-  WA_MESSAGES,
-  PHONE_PRIMARY,
-  PHONE_SECONDARY,
-  waLink,
-  trackCta,
-} from "@/lib/whatsapp";
-import photo1 from "@/assets/PHOTO-2026-08-18-21-51-57.jpg.asset.json";
-import photo2 from "@/assets/PHOTO-2026-08-18-21-51-58.jpg.asset.json";
-import photo3 from "@/assets/PHOTO-2026-08-18-21-51-58-2.jpg.asset.json";
-import photo4 from "@/assets/PHOTO-2026-08-18-21-51-59.jpg.asset.json";
+import { WA_MESSAGES, PHONE, waLink, callLink, trackCta } from "@/lib/whatsapp";
+import photo1 from "@/assets/batch-photo-1.jpg";
+import photo2 from "@/assets/batch-photo-2.jpg";
 
 const NAV = [
   { label: "About", href: "#about" },
@@ -67,18 +58,18 @@ const NAV = [
 ];
 
 const PHOTOS = [
-  { src: photo1.url, alt: "Previous batch participants of the Train the Trainer Programme" },
-  { src: photo3.url, alt: "Participants from across Kerala at a Train the Trainer session" },
-  { src: photo4.url, alt: "A previous Train the Trainer batch after a live session" },
-  { src: photo2.url, alt: "Trainers, teachers and professionals at a Train the Trainer batch" },
+  { src: photo1, alt: "Previous batch participants of the Train the Trainer Programme in Calicut" },
+  { src: photo2, alt: "Trainers, teachers and professionals at a Train the Trainer batch" },
 ];
 
 function Nav() {
-  const [open, setOpen] = useState(false);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-background/10 bg-navy-deep/85 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
-        <a href="#top" className="font-display text-sm font-bold tracking-tight text-background sm:text-base">
+    <header className="fixed inset-x-0 top-0 z-50 border-b-2 border-royal bg-navy-deep">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <a
+          href="#top"
+          className="whitespace-nowrap font-display text-lg font-bold tracking-tight text-background sm:text-2xl"
+        >
           Mark Career <span className="text-cyan-accent">Academy</span>
         </a>
         <nav className="hidden items-center gap-6 lg:flex">
@@ -92,47 +83,38 @@ function Nav() {
             </a>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          <WhatsAppCta
-            id="nav_whatsapp_cta"
-            message={WA_MESSAGES.details}
-            label="WhatsApp Us"
-            className="hidden sm:inline-flex"
-          />
-          <button
-            aria-label="Toggle menu"
-            onClick={() => setOpen((o) => !o)}
-            className="rounded-full border border-background/20 p-2 text-background lg:hidden"
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
+        <WhatsAppCta
+          id="nav_whatsapp_cta"
+          message={WA_MESSAGES.details}
+          label={<span className="hidden sm:inline">WhatsApp</span>}
+          className="shrink-0 px-3 sm:px-6"
+        />
       </div>
-      {open && (
-        <nav className="border-t border-background/10 bg-navy-deep px-4 pb-5 pt-2 lg:hidden">
-          {NAV.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              onClick={() => setOpen(false)}
-              className="block border-b border-background/5 py-3 text-sm text-background/80"
-            >
-              {n.label}
-            </a>
-          ))}
-        </nav>
-      )}
     </header>
   );
 }
 
-function Hero() {
+function HeroImage() {
   return (
-    <section id="top" className="surface-gradient relative overflow-hidden pt-24">
-      <div className="pointer-events-none absolute -right-40 top-0 size-[36rem] rounded-full bg-cyan-accent/15 blur-3xl" />
+    <div className="overflow-hidden rounded-[2rem] border-2 border-background/20 shadow-hard-amber">
+      <img
+        src={photo1}
+        alt="Previous batch of the Train the Trainer Programme in Calicut"
+        className="h-[260px] w-full object-cover object-center sm:h-[420px]"
+        loading="eager"
+      />
+    </div>
+  );
+}
+
+function Hero({ heroRef }: { heroRef: RefObject<HTMLElement | null> }) {
+  return (
+    <section id="top" ref={heroRef} className="surface-gradient relative overflow-hidden pt-24">
+      <div className="pointer-events-none absolute -right-16 -top-16 hidden size-72 rotate-12 bg-royal sm:block sm:size-96" />
+      <div className="pointer-events-none absolute -right-8 top-40 hidden size-16 rotate-45 border-4 border-gold sm:block sm:size-24" />
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_0.95fr] lg:py-24">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-accent/30 bg-cyan-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-accent">
+          <span className="inline-flex items-center gap-2 rounded-full border-2 border-navy-deep bg-royal px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-navy-deep">
             2026 Edition · Calicut
           </span>
           <h1 className="mt-6 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-background sm:text-6xl lg:text-7xl">
@@ -140,48 +122,30 @@ function Hero() {
             <br />
             <span className="text-gradient">TRAINER</span>
           </h1>
+          <div className="mb-10 mt-6 lg:hidden">
+            <HeroImage />
+            <div className="mt-6">
+              <WhatsAppCta
+                id="hero_inline_whatsapp_cta"
+                message={WA_MESSAGES.sticky}
+                label="Chat on WhatsApp"
+                size="lg"
+                className="w-full border-background shadow-[5px_5px_0_0_var(--color-background)] hover:shadow-[7px_7px_0_0_var(--color-background)] active:shadow-[2px_2px_0_0_var(--color-background)]"
+              />
+            </div>
+          </div>
           <p className="mt-5 font-display text-xl font-semibold text-background/90 sm:text-2xl">
             Transform the way you teach, train &amp; lead.
           </p>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-background/70">
-            Learn how to make your training more engaging, practical and impactful — without
-            boring your audience.
+            Make your training engaging, practical and impactful — in just 1 month.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <WhatsAppCta
-              id="hero_whatsapp_cta"
-              message={WA_MESSAGES.details}
-              label="Chat on WhatsApp"
-              size="lg"
-            />
-            <a
-              href="#about"
-              className="inline-flex items-center gap-2 rounded-full border border-background/25 px-7 py-4 text-base font-semibold text-background transition-colors hover:bg-background/10"
-            >
-              Get Programme Details <ArrowRight className="size-4" />
-            </a>
-          </div>
-          <p className="mt-5 text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-            Limited to 30 Participants
+          <p className="mt-5 text-sm font-bold uppercase tracking-[0.2em] text-gold">
+            Only 30 Seats · Early Bird Ends Nov 1
           </p>
         </Reveal>
-        <Reveal delay={120}>
-          <div className="relative">
-            <div className="overflow-hidden rounded-[2rem] border border-background/15 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)]">
-              <img
-                src={photo1.url}
-                alt="Previous batch of the Train the Trainer Programme in Calicut"
-                className="h-[300px] w-full object-cover object-center sm:h-[420px]"
-                loading="eager"
-              />
-            </div>
-            <div className="absolute -bottom-5 left-4 rounded-2xl border border-background/15 bg-navy-deep/90 px-5 py-3 backdrop-blur">
-              <p className="font-display text-2xl font-bold text-cyan-accent">12 · 20 · 3</p>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-background/60">
-                Sessions · Challenges · Mentors
-              </p>
-            </div>
-          </div>
+        <Reveal delay={120} className="hidden lg:block">
+          <HeroImage />
         </Reveal>
       </div>
     </section>
@@ -199,16 +163,29 @@ function SocialProof() {
         />
         <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-2 lg:overflow-visible">
           {PHOTOS.map((p, i) => (
-            <Reveal key={p.src} delay={i * 80} className="w-[85vw] shrink-0 snap-center sm:w-[65vw] lg:w-auto">
+            <Reveal
+              key={p.src}
+              delay={i * 80}
+              className="w-[85vw] shrink-0 snap-center sm:w-[65vw] lg:w-auto"
+            >
               <img
                 src={p.src}
                 alt={p.alt}
                 loading="lazy"
-                className="h-64 w-full rounded-3xl object-cover shadow-[0_24px_50px_-30px_rgba(0,0,0,0.5)] sm:h-80"
+                className="h-64 w-full rounded-3xl border-2 border-navy-deep object-cover shadow-hard sm:h-80"
               />
             </Reveal>
           ))}
         </div>
+        <Reveal>
+          <div className="mt-10 flex justify-center">
+            <WhatsAppCta
+              id="social_whatsapp_cta"
+              message={WA_MESSAGES.social}
+              label="Ask About the Next Batch"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -219,12 +196,7 @@ const PAINS = [
   "Training becomes repetitive",
   "Participants lose attention",
   "Difficult to explain concepts simply",
-  "Presentations become too dependent on slides",
   "Lack of engaging activities",
-  "Difficulty keeping energy high",
-  "Difficulty making training memorable",
-  "Lack of confidence while presenting",
-  "Sessions don't create enough impact",
 ];
 
 function PainPoints() {
@@ -238,7 +210,7 @@ function PainPoints() {
         <div className="mt-10 grid gap-3 sm:grid-cols-2">
           {PAINS.map((p, i) => (
             <Reveal key={p} delay={i * 40}>
-              <div className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4">
+              <div className="flex items-start gap-3 rounded-2xl border-2 border-border bg-card p-4">
                 <X className="mt-0.5 size-5 shrink-0 text-destructive" />
                 <p className="text-sm text-card-foreground">{p}</p>
               </div>
@@ -255,7 +227,7 @@ function PainPoints() {
               <WhatsAppCta
                 id="pain_whatsapp_cta"
                 message={WA_MESSAGES.details}
-                label="Ask About the Programme"
+                label="Fix This — Chat on WhatsApp"
                 size="lg"
               />
             </div>
@@ -281,7 +253,6 @@ const AFTER = [
   "Practical activities",
   "More confident communication",
   "Memorable learning experiences",
-  "Stronger trainer presence",
 ];
 
 function Transformation() {
@@ -291,7 +262,7 @@ function Transformation() {
         <SectionHeading eyebrow="Transformation" title="Before → After" />
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <Reveal>
-            <div className="h-full rounded-3xl border border-border bg-muted p-7">
+            <div className="h-full rounded-3xl border-2 border-border bg-muted p-7">
               <p className="mb-5 text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
                 Before
               </p>
@@ -322,9 +293,9 @@ function Transformation() {
           </Reveal>
         </div>
         <Reveal>
-          <div className="mt-10 grid items-center gap-8 rounded-3xl border border-border bg-card p-6 lg:grid-cols-2">
+          <div className="mt-10 grid items-center gap-8 rounded-3xl border-2 border-border bg-card p-6 lg:grid-cols-2">
             <img
-              src={photo3.url}
+              src={photo2}
               alt="Participants practising during a previous Train the Trainer batch"
               loading="lazy"
               className="h-64 w-full rounded-2xl object-cover sm:h-80"
@@ -340,6 +311,13 @@ function Transformation() {
               <p className="mt-5 font-display text-base font-semibold text-royal">
                 Learn → Practice → Take Challenges → Receive Feedback → Improve
               </p>
+              <div className="mt-6">
+                <WhatsAppCta
+                  id="transformation_whatsapp_cta"
+                  message={WA_MESSAGES.transformation}
+                  label="See If This Fits You"
+                />
+              </div>
             </div>
           </div>
         </Reveal>
@@ -358,30 +336,69 @@ const STATS = [
 function Stats() {
   return (
     <section className="surface-gradient py-16">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 sm:px-6 lg:grid-cols-4">
-        {STATS.map((s, i) => (
-          <Reveal key={s.l} delay={i * 90}>
-            <div className="rounded-3xl border border-background/10 bg-background/5 p-6 text-center backdrop-blur">
-              <p className="font-display text-4xl font-extrabold text-cyan-accent sm:text-5xl">
-                {s.n}
-              </p>
-              <p className="mt-2 text-xs uppercase tracking-[0.2em] text-background/70">{s.l}</p>
-            </div>
-          </Reveal>
-        ))}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+          {STATS.map((s, i) => (
+            <Reveal key={s.l} delay={i * 90}>
+              <div className="rounded-3xl border-2 border-royal bg-navy p-6 text-center">
+                <p className="font-display text-4xl font-extrabold text-cyan-accent sm:text-5xl">
+                  {s.n}
+                </p>
+                <p className="mt-2 text-xs uppercase tracking-[0.2em] text-background/70">{s.l}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal>
+          <div className="mt-10 flex justify-center">
+            <WhatsAppCta
+              id="schedule_whatsapp_cta"
+              message={WA_MESSAGES.schedule}
+              label="Get the Full Schedule"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 const CURRICULUM = [
-  { icon: Mic, t: "Public Speaking", d: "Build confidence and improve your ability to speak and influence." },
-  { icon: Layers, t: "Module Preparation", d: "Learn how to structure training content effectively." },
-  { icon: Presentation, t: "Module Presentation", d: "Learn how to present your training content in an engaging way." },
-  { icon: Lightbulb, t: "Training Ideas & Insights", d: "Discover practical ideas for making training more interesting." },
-  { icon: PenTool, t: "Training Design & Development", d: "Understand how to design and develop meaningful training experiences." },
-  { icon: MessagesSquare, t: "Communication & Presentation Mastery", d: "Strengthen communication, presentation and delivery skills." },
-  { icon: Network, t: "Transactional Analysis", d: "Understand interaction patterns and improve communication." },
+  {
+    icon: Mic,
+    t: "Public Speaking",
+    d: "Build confidence and improve your ability to speak and influence.",
+  },
+  {
+    icon: Layers,
+    t: "Module Preparation",
+    d: "Learn how to structure training content effectively.",
+  },
+  {
+    icon: Presentation,
+    t: "Module Presentation",
+    d: "Learn how to present your training content in an engaging way.",
+  },
+  {
+    icon: Lightbulb,
+    t: "Training Ideas & Insights",
+    d: "Discover practical ideas for making training more interesting.",
+  },
+  {
+    icon: PenTool,
+    t: "Training Design & Development",
+    d: "Understand how to design and develop meaningful training experiences.",
+  },
+  {
+    icon: MessagesSquare,
+    t: "Communication & Presentation Mastery",
+    d: "Strengthen communication, presentation and delivery skills.",
+  },
+  {
+    icon: Network,
+    t: "Transactional Analysis",
+    d: "Understand interaction patterns and improve communication.",
+  },
   { icon: Compass, t: "Enneagram", d: "Explore personality and behavioural patterns." },
 ];
 
@@ -401,9 +418,9 @@ function Curriculum() {
                   onMouseEnter={() => setActive(i)}
                   onFocus={() => setActive(i)}
                   onClick={() => setActive(i)}
-                  className={`h-full w-full rounded-3xl border p-6 text-left transition-all duration-300 ${
+                  className={`h-full w-full rounded-3xl border-2 p-6 text-left transition-all duration-300 ${
                     on
-                      ? "-translate-y-1 border-royal/40 bg-navy-deep shadow-[0_24px_50px_-24px_var(--color-royal)]"
+                      ? "-translate-y-1 border-navy-deep bg-navy-deep shadow-hard-amber"
                       : "border-border bg-card hover:-translate-y-1"
                   }`}
                 >
@@ -413,7 +430,9 @@ function Curriculum() {
                   >
                     {c.t}
                   </h3>
-                  <p className={`mt-2 text-sm ${on ? "text-background/70" : "text-muted-foreground"}`}>
+                  <p
+                    className={`mt-2 text-sm ${on ? "text-background/70" : "text-muted-foreground"}`}
+                  >
                     {c.d}
                   </p>
                 </button>
@@ -421,6 +440,15 @@ function Curriculum() {
             );
           })}
         </div>
+        <Reveal>
+          <div className="mt-10 flex justify-center">
+            <WhatsAppCta
+              id="curriculum_whatsapp_cta"
+              message={WA_MESSAGES.curriculum}
+              label="Ask About the Curriculum"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -445,12 +473,12 @@ function Challenges() {
           title="You Won't Just Watch. You'll Do."
           sub="20 challenges and regular feedback — this is not a passive online course."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
           {CHALLENGE_TYPES.map((c, i) => {
             const Icon = c.icon;
             return (
               <Reveal key={c.t} delay={i * 70}>
-                <div className="h-full rounded-3xl border border-background/12 bg-background/5 p-6 text-center backdrop-blur">
+                <div className="h-full rounded-3xl border-2 border-royal bg-navy p-6 text-center">
                   <Icon className="mx-auto size-7 text-cyan-accent" />
                   <p className="mt-3 text-sm font-semibold text-background">{c.t}</p>
                 </div>
@@ -462,7 +490,7 @@ function Challenges() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             {steps.map((s, i) => (
               <div key={s} className="flex items-center gap-3">
-                <span className="rounded-full border border-cyan-accent/30 bg-cyan-accent/10 px-5 py-2 text-sm font-semibold text-cyan-accent">
+                <span className="rounded-full border-2 border-navy-deep bg-cyan-accent px-5 py-2 text-sm font-bold text-navy-deep">
                   {s}
                 </span>
                 {i < steps.length - 1 && <ArrowRight className="size-4 text-background/40" />}
@@ -487,9 +515,6 @@ function Challenges() {
 
 const FORMAT = [
   { k: "Duration", v: "1 Month" },
-  { k: "Live Sessions", v: "12" },
-  { k: "Challenges", v: "20" },
-  { k: "Mentors", v: "3" },
   { k: "Languages", v: "Malayalam & English" },
   { k: "Format", v: "Live + Challenge-Based Learning" },
   { k: "Feedback", v: "Regular Feedback" },
@@ -500,7 +525,7 @@ function Format() {
     <section className="bg-background py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <SectionHeading eyebrow="Programme Format" title="Everything at a glance" />
-        <div className="mt-10 divide-y divide-border overflow-hidden rounded-3xl border border-border bg-card">
+        <div className="mt-10 divide-y divide-border overflow-hidden rounded-3xl border-2 border-border bg-card">
           {FORMAT.map((f, i) => (
             <Reveal key={f.k} delay={i * 40}>
               <div className="flex items-center justify-between gap-4 px-6 py-4">
@@ -512,6 +537,15 @@ function Format() {
             </Reveal>
           ))}
         </div>
+        <Reveal>
+          <div className="mt-10 flex justify-center">
+            <WhatsAppCta
+              id="format_whatsapp_cta"
+              message={WA_MESSAGES.format}
+              label="Confirm Programme Format"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -543,17 +577,12 @@ function Bonuses() {
           title="BONUS ADD-ONS"
           sub="14 additional training modules included with the programme."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-2.5 sm:grid-cols-2">
           {BONUSES.map((b, i) => (
-            <Reveal key={b} delay={i * 35}>
-              <div className="group h-full rounded-3xl border border-border bg-card p-5 transition-transform duration-300 hover:-translate-y-1">
-                <div className="flex items-start justify-between gap-3">
-                  <Gift className="size-6 text-royal" />
-                  <span className="rounded-full bg-gold/15 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-navy-deep">
-                    Bonus Included
-                  </span>
-                </div>
-                <p className="mt-4 font-display text-base font-bold text-navy-deep">
+            <Reveal key={b} delay={i * 20}>
+              <div className="flex items-center gap-3 rounded-xl border-2 border-border bg-card px-4 py-3">
+                <Gift className="size-4 shrink-0 text-royal" />
+                <p className="font-display text-sm font-bold text-navy-deep">
                   {String(i + 1).padStart(2, "0")}. {b}
                 </p>
               </div>
@@ -565,7 +594,7 @@ function Bonuses() {
             <WhatsAppCta
               id="bonus_whatsapp_cta"
               message={WA_MESSAGES.bonus}
-              label="Ask About the Bonuses"
+              label="Unlock All 14 Bonuses"
               size="lg"
             />
           </div>
@@ -591,27 +620,49 @@ function Resources() {
             Training Resources
           </p>
           <ul className="mt-6 space-y-3">
-            {["Videos", "Audios", "Presentations", "Training resources", "Life Skills Training Kit"].map(
-              (r) => (
-                <li key={r} className="flex items-center gap-3 text-sm text-background/85">
-                  <Check className="size-4 text-whatsapp" />
-                  {r}
-                </li>
-              ),
-            )}
+            {[
+              "Videos",
+              "Audios",
+              "Presentations",
+              "Training resources",
+              "Life Skills Training Kit",
+            ].map((r) => (
+              <li key={r} className="flex items-center gap-3 text-sm text-background/85">
+                <Check className="size-4 text-whatsapp" />
+                {r}
+              </li>
+            ))}
           </ul>
+          <div className="mt-8">
+            <WhatsAppCta
+              id="resources_whatsapp_cta"
+              message={WA_MESSAGES.resources}
+              label="Ask About Resources"
+            />
+          </div>
         </Reveal>
         <Reveal delay={120}>
-          <div className="relative h-72 sm:h-80">
+          <div className="grid gap-4 relative sm:h-72 lg:h-80">
             {[Database, BookOpen, Video].map((Icon, i) => (
               <div
                 key={i}
-                style={{ top: `${i * 3.5}rem`, left: `${i * 2.2}rem` }}
-                className="absolute w-64 rounded-3xl border border-background/15 bg-background/8 p-6 backdrop-blur-xl sm:w-80"
+                className={`w-full rounded-3xl border-2 border-royal bg-navy-deep p-6 shadow-hard-amber sm:absolute sm:w-64 lg:w-80 ${
+                  [
+                    "sm:top-0 sm:left-0",
+                    "sm:top-14 sm:left-[2.2rem]",
+                    "sm:top-28 sm:left-[4.4rem]",
+                  ][i]
+                }`}
               >
                 <Icon className="size-7 text-cyan-accent" />
                 <p className="mt-3 font-display text-base font-semibold text-background">
-                  {["2 TB of training material", "Life Skills Training Kit", "Videos, audios & decks"][i]}
+                  {
+                    [
+                      "2 TB of training material",
+                      "Life Skills Training Kit",
+                      "Videos, audios & decks",
+                    ][i]
+                  }
                 </p>
               </div>
             ))}
@@ -624,8 +675,16 @@ function Resources() {
 
 function Longterm() {
   const items = [
-    { icon: InfinityIcon, t: "Lifetime Membership", d: "Lifetime membership of Mark Career Academy." },
-    { icon: HeartHandshake, t: "Lifetime Mentoring", d: "Continued mentoring after the programme." },
+    {
+      icon: InfinityIcon,
+      t: "Lifetime Membership",
+      d: "Lifetime membership of Mark Career Academy.",
+    },
+    {
+      icon: HeartHandshake,
+      t: "Lifetime Mentoring",
+      d: "Continued mentoring after the programme.",
+    },
     { icon: Award, t: "Certificate", d: "Certificate on course completion." },
   ];
   return (
@@ -640,7 +699,7 @@ function Longterm() {
             const Icon = it.icon;
             return (
               <Reveal key={it.t} delay={i * 90}>
-                <div className="h-full rounded-3xl border border-border bg-card p-7 text-center">
+                <div className="h-full rounded-3xl border-2 border-border bg-card p-7 text-center">
                   <Icon className="mx-auto size-8 text-royal" />
                   <h3 className="mt-4 font-display text-lg font-bold text-navy-deep">{it.t}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{it.d}</p>
@@ -649,6 +708,15 @@ function Longterm() {
             );
           })}
         </div>
+        <Reveal>
+          <div className="mt-10 flex justify-center">
+            <WhatsAppCta
+              id="longterm_whatsapp_cta"
+              message={WA_MESSAGES.longterm}
+              label="Ask About Lifetime Benefits"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -656,7 +724,12 @@ function Longterm() {
 
 function Mentors() {
   const mentors = [
-    { role: "Pilot Faculty", name: "Suhail C.P.", desc: "HRD Trainer & Life Coach", initials: "SC" },
+    {
+      role: "Pilot Faculty",
+      name: "Suhail C.P.",
+      desc: "HRD Trainer & Life Coach",
+      initials: "SC",
+    },
     {
       role: "Co-Faculty",
       name: "Mark Team Members",
@@ -671,7 +744,7 @@ function Mentors() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {mentors.map((m, i) => (
             <Reveal key={m.name} delay={i * 100}>
-              <div className="h-full rounded-3xl border border-border bg-card p-7">
+              <div className="h-full rounded-3xl border-2 border-border bg-card p-7">
                 <div className="surface-gradient flex size-16 items-center justify-center rounded-2xl font-display text-lg font-bold text-background">
                   {m.initials}
                 </div>
@@ -684,6 +757,15 @@ function Mentors() {
             </Reveal>
           ))}
         </div>
+        <Reveal>
+          <div className="mt-10 flex justify-center">
+            <WhatsAppCta
+              id="mentors_whatsapp_cta"
+              message={WA_MESSAGES.mentors}
+              label="Ask About the Mentors"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -717,7 +799,7 @@ function WhoFor() {
             const Icon = a.icon;
             return (
               <Reveal key={a.t} delay={i * 40}>
-                <div className="flex h-full flex-col items-center gap-3 rounded-3xl border border-border bg-card p-6 text-center transition-transform duration-300 hover:-translate-y-1">
+                <div className="flex h-full flex-col items-center gap-3 rounded-3xl border-2 border-border bg-card p-6 text-center transition-transform duration-300 hover:-translate-y-1">
                   <Icon className="size-7 text-royal" />
                   <p className="text-sm font-semibold text-navy-deep">{a.t}</p>
                 </div>
@@ -729,6 +811,15 @@ function WhoFor() {
           <p className="mt-8 text-center text-sm text-muted-foreground">
             And anyone who wants to become a more powerful and impactful trainer.
           </p>
+        </Reveal>
+        <Reveal>
+          <div className="mt-8 flex justify-center">
+            <WhatsAppCta
+              id="audience_whatsapp_cta"
+              message={WA_MESSAGES.audience}
+              label="Check If I Qualify"
+            />
+          </div>
         </Reveal>
       </div>
     </section>
@@ -748,44 +839,26 @@ const VALUE = [
   "Certificate on Course Completion",
 ];
 
-function ValueStack() {
-  return (
-    <section className="surface-gradient py-20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <SectionHeading light eyebrow="Programme Value" title="Everything You Receive" />
-        <div className="mt-10 grid gap-3 sm:grid-cols-2">
-          {VALUE.map((v, i) => (
-            <Reveal key={v} delay={i * 40}>
-              <div className="flex items-center gap-3 rounded-2xl border border-background/12 bg-background/5 px-5 py-4 backdrop-blur">
-                <Check className="size-5 shrink-0 text-whatsapp" />
-                <span className="text-sm font-medium text-background">{v}</span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Pricing() {
   return (
     <section id="pricing" className="bg-secondary py-20">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <SectionHeading eyebrow="Investment" title="Simple, transparent pricing" />
         <Reveal>
-          <div className="mt-10 overflow-hidden rounded-[2rem] border border-border bg-card shadow-[0_40px_80px_-40px_rgba(0,0,0,0.35)]">
+          <div className="mt-10 overflow-hidden rounded-[2rem] border-2 border-navy-deep bg-card shadow-hard">
             <div className="surface-gradient px-8 py-10 text-center">
               <p className="text-sm text-background/60 line-through">₹12,000</p>
               <p className="mt-2 font-display text-6xl font-extrabold text-gradient">₹8,500</p>
               <p className="mt-3 text-xs font-bold uppercase tracking-[0.25em] text-gold">
-                Early Bird Offer
+                Early Bird Offer — Save ₹3,500
               </p>
-              <p className="mt-2 text-sm text-background/70">Register before November 1</p>
+              <p className="mt-2 text-sm text-background/70">
+                Price goes up to ₹12,000 after November 1
+              </p>
             </div>
             <div className="px-8 py-8">
               <p className="text-center font-display text-lg font-bold text-navy-deep">
-                Only 30 Seats
+                Only 30 Seats — Once They're Gone, This Batch Closes
               </p>
               <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                 {VALUE.map((v) => (
@@ -798,7 +871,7 @@ function Pricing() {
                 <WhatsAppCta
                   id="pricing_whatsapp_cta"
                   message={WA_MESSAGES.register}
-                  label="Check Availability on WhatsApp"
+                  label="Reserve My Seat Before Nov 1"
                   size="lg"
                 />
               </div>
@@ -810,85 +883,31 @@ function Pricing() {
   );
 }
 
-function Urgency() {
-  return (
-    <section className="bg-background py-16">
-      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <Reveal>
-          <p className="font-display text-5xl font-extrabold text-navy-deep">Only 30 Seats</p>
-          <p className="mt-4 text-sm text-muted-foreground">
-            This is designed to keep the programme practical and interactive.
-          </p>
-          <div className="mt-7 flex justify-center">
-            <WhatsAppCta
-              id="urgency_whatsapp_cta"
-              message={WA_MESSAGES.register}
-              label="Ask About Seat Availability"
-              size="lg"
-            />
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Steps() {
-  const steps = [
-    { n: "01", t: "Click WhatsApp", d: "Start a conversation in one tap." },
-    { n: "02", t: "Get Programme Details", d: "We share the complete programme information." },
-    { n: "03", t: "Confirm Your Registration", d: "Reserve one of the 30 seats." },
-  ];
-  return (
-    <section className="bg-secondary py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <SectionHeading eyebrow="Registration" title="Three steps. No long forms." />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 100}>
-              <div className="h-full rounded-3xl border border-border bg-card p-7">
-                <p className="font-display text-4xl font-extrabold text-royal/25">{s.n}</p>
-                <h3 className="mt-3 font-display text-lg font-bold text-navy-deep">{s.t}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <div className="mt-10 flex justify-center">
-            <WhatsAppCta
-              id="steps_whatsapp_cta"
-              message={WA_MESSAGES.register}
-              label="Reserve My Seat"
-              size="lg"
-            />
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-const CONTACT_ANSWER = "Please contact us on WhatsApp for complete details.";
-
 const FAQS: { q: string; a: string }[] = [
   {
     q: "Who can attend the Train the Trainer Programme?",
-    a: "Trainers, coaches, teachers, school principals and managers, social workers, parents, entrepreneurs, doctors, psychologists, advocates, police officers, government employees, public figures, students and other professionals who train, teach, lead or influence people.",
+    a: "Trainers, coaches, teachers, school leaders, social workers, parents, entrepreneurs, doctors, psychologists, advocates, police officers, government employees, students and anyone who trains, teaches, leads or influences people.",
   },
-  { q: "Is this suitable for beginners?", a: "Yes. The programme is practical and challenge-based, so you learn, practise and receive feedback step by step." },
-  { q: "I am already a trainer. Will this still be useful for me?", a: "Yes. The programme focuses on making your delivery more engaging, interactive and impactful, with ideas, activities and regular feedback." },
-  { q: "Is the programme suitable for teachers?", a: "Yes. Teachers' Training is also included as a bonus module." },
-  { q: "What languages are used?", a: "Malayalam and English." },
-  { q: "How long is the programme?", a: "1 month." },
-  { q: "How many live sessions are included?", a: "12 live sessions." },
-  { q: "What are the challenges?", a: "20 challenges in WhatsApp, audio, video, presentation and live formats." },
-  { q: "Will I receive feedback?", a: "Yes. Regular feedback is part of the programme." },
-  { q: "What bonuses are included?", a: "14 bonus add-on modules including Enneagram, Transactional Analysis, Teachers' Training, Public Speaking, Online Icebreakers & Energizers, Corporate Train The Trainer, Effective Parenting, Presentation Skills, Mentoring Skills, Lead Generation Management, Leadership Mastery, Change Management, Success Habits of Powerful Leaders and 51 Ways to Motivate Your Employee." },
-  { q: "Do I receive training resources?", a: "Yes. 2 TB+ of training resources including videos, audios and presentations, plus a Life Skills Training Kit." },
-  { q: "Is there a certificate?", a: "Yes, a certificate on course completion." },
-  { q: "What is the registration fee?", a: "₹12,000. Early bird offer: ₹8,500 when you register before November 1." },
-  { q: "How can I register?", a: CONTACT_ANSWER },
+  {
+    q: "I'm new to training, or already an experienced trainer — will this help me?",
+    a: "Yes, either way. Beginners learn step by step through practice and feedback. Experienced trainers sharpen delivery, engagement and confidence with new ideas and activities.",
+  },
+  {
+    q: "What's the format?",
+    a: "1 month, 12 live sessions and 20 practical challenges (WhatsApp, audio, video, presentation and live), in Malayalam & English, with regular feedback.",
+  },
+  {
+    q: "What do I get with the programme?",
+    a: "14 bonus modules (Enneagram, Transactional Analysis, Public Speaking, Leadership Mastery and more), 2 TB+ of training resources, a Life Skills Training Kit, lifetime membership and mentoring, and a certificate on completion.",
+  },
+  {
+    q: "What is the registration fee?",
+    a: "₹12,000 — but it's ₹8,500 if you register before November 1. Only 30 seats, so early registration also secures your spot.",
+  },
+  {
+    q: "How can I register?",
+    a: "Message us on WhatsApp — we'll confirm seat availability and walk you through registration in minutes.",
+  },
 ];
 
 function Faq() {
@@ -913,7 +932,7 @@ function Faq() {
             <WhatsAppCta
               id="faq_whatsapp_cta"
               message={WA_MESSAGES.faq}
-              label="I'm Interested"
+              label="Still Have Questions? Ask on WhatsApp"
               size="lg"
             />
           </div>
@@ -927,7 +946,7 @@ function FinalCta() {
   return (
     <section className="relative overflow-hidden">
       <img
-        src={photo4.url}
+        src={photo1}
         alt="Group photograph of a previous Train the Trainer batch"
         loading="lazy"
         className="absolute inset-0 size-full object-cover"
@@ -939,24 +958,16 @@ function FinalCta() {
             Your Knowledge Can Change People.
           </h2>
           <p className="mt-4 text-lg text-background/80">
-            Learn how to deliver it with confidence, creativity and impact.
+            Only 30 seats. Early Bird price ends November 1. Don't miss this batch.
           </p>
           <p className="mt-8 font-display text-xl font-bold text-cyan-accent">
-            Start Your Trainer Journey
+            Start Your Trainer Journey Today
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <div className="mt-6 flex justify-center">
             <WhatsAppCta
               id="final_whatsapp_cta"
               message={WA_MESSAGES.register}
-              label={`Chat on WhatsApp · ${PHONE_PRIMARY}`}
-              size="lg"
-            />
-            <WhatsAppCta
-              id="final_whatsapp_cta_secondary"
-              message={WA_MESSAGES.details}
-              phone={PHONE_SECONDARY}
-              label={PHONE_SECONDARY}
-              variant="outline"
+              label={`Chat on WhatsApp · ${PHONE}`}
               size="lg"
             />
           </div>
@@ -975,17 +986,14 @@ function Footer() {
           <p className="mt-2 text-sm text-background/60">Train the Trainer Programme</p>
         </div>
         <div className="space-y-2 text-sm text-background/70">
-          {[PHONE_PRIMARY, PHONE_SECONDARY].map((p) => (
-            <a
-              key={p}
-              href={`tel:+91${p}`}
-              data-cta="footer_phone_cta"
-              onClick={() => trackCta("footer_phone_cta")}
-              className="flex items-center gap-2 hover:text-cyan-accent"
-            >
-              <Phone className="size-4" /> {p}
-            </a>
-          ))}
+          <a
+            href={callLink()}
+            data-cta="footer_phone_cta"
+            onClick={() => trackCta("footer_phone_cta")}
+            className="flex items-center gap-2 hover:text-cyan-accent"
+          >
+            <Phone className="size-4" /> {PHONE}
+          </a>
           <a
             href="mailto:markcareeracademy@gmail.com"
             className="flex items-center gap-2 hover:text-cyan-accent"
@@ -1016,7 +1024,7 @@ function Footer() {
   );
 }
 
-function FloatingWhatsApp() {
+function FloatingWhatsApp({ show }: { show: boolean }) {
   return (
     <>
       <a
@@ -1026,7 +1034,11 @@ function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackCta("sticky_whatsapp_cta")}
-        className="fixed inset-x-3 bottom-3 z-50 flex items-center justify-center gap-2.5 rounded-full bg-whatsapp px-6 py-4 text-base font-bold text-navy-deep shadow-[0_16px_40px_-12px_rgba(0,0,0,0.5)] lg:hidden"
+        aria-hidden={!show}
+        tabIndex={show ? 0 : -1}
+        className={`fixed inset-x-3 bottom-3 z-50 flex items-center justify-center gap-2.5 rounded-full border-2 border-navy-deep bg-whatsapp px-6 py-4 text-base font-bold text-navy-deep shadow-hard transition-all duration-300 lg:hidden ${
+          show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-24 opacity-0"
+        }`}
       >
         <MessageCircle className="size-5" /> Chat on WhatsApp
       </a>
@@ -1038,7 +1050,7 @@ function FloatingWhatsApp() {
         rel="noopener noreferrer"
         onClick={() => trackCta("floating_whatsapp_cta")}
         aria-label="Chat on WhatsApp"
-        className="fixed bottom-7 right-7 z-50 hidden size-14 items-center justify-center rounded-full bg-whatsapp text-navy-deep shadow-[0_16px_40px_-12px_rgba(0,0,0,0.5)] transition-transform hover:scale-110 lg:flex"
+        className="fixed bottom-7 right-7 z-50 hidden size-14 items-center justify-center rounded-full border-2 border-navy-deep bg-whatsapp text-navy-deep shadow-hard transition-transform hover:scale-110 lg:flex"
       >
         <MessageCircle className="size-7" />
       </a>
@@ -1047,11 +1059,28 @@ function FloatingWhatsApp() {
 }
 
 export default function Landing() {
+  const heroRef = useRef<HTMLElement>(null);
+  const [pastHero, setPastHero] = useState(false);
+
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry) setPastHero(!entry.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <Nav />
       <main>
-        <Hero />
+        <Hero heroRef={heroRef} />
         <SocialProof />
         <PainPoints />
         <Transformation />
@@ -1064,15 +1093,12 @@ export default function Landing() {
         <Resources />
         <Longterm />
         <Mentors />
-        <ValueStack />
         <Pricing />
-        <Urgency />
-        <Steps />
         <Faq />
         <FinalCta />
       </main>
       <Footer />
-      <FloatingWhatsApp />
+      <FloatingWhatsApp show={pastHero} />
     </div>
   );
 }

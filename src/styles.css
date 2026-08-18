@@ -7,22 +7,35 @@
 @theme {
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --color-navy: oklch(0.22 0.07 258);
-  --color-navy-deep: oklch(0.16 0.06 262);
-  --color-royal: oklch(0.52 0.19 262);
-  --color-cyan-accent: oklch(0.78 0.14 210);
-  --color-whatsapp: oklch(0.68 0.16 152);
-  --color-gold: oklch(0.83 0.15 85);
+  /*
+   * Bold, flat "Amber & Ink" palette — one signature accent (amber) used
+   * consistently on light and dark surfaces, one action tone (ember) for
+   * urgency/badges, no gradients, no translucent glass. Names kept for
+   * compatibility with existing utility classes (bg-navy-deep, text-royal,
+   * text-cyan-accent, text-gold) but reassigned to the bold palette below.
+   */
+  --color-navy: oklch(0.264 0.021 82.47); /* ink-soft: alt dark surface */
+  --color-navy-deep: oklch(0.193 0.011 80.52); /* ink: dark sections, nav, footer, heading text */
+  --color-royal: oklch(0.774 0.166 72.1); /* amber: signature accent (light surfaces) */
+  --color-cyan-accent: oklch(0.774 0.166 72.1); /* amber: signature accent (dark surfaces) */
+  --color-gold: oklch(0.619 0.21 35.45); /* ember: action/urgency accent */
+  --color-whatsapp: oklch(0.761 0.201 149.74); /* true WhatsApp brand green */
 }
 
 @utility surface-gradient {
-  background-image: linear-gradient(135deg, var(--color-navy-deep), var(--color-navy) 55%, var(--color-royal));
+  background-color: var(--color-navy-deep);
 }
 
 @utility text-gradient {
-  background-image: linear-gradient(100deg, var(--color-cyan-accent), oklch(0.9 0.05 230));
-  background-clip: text;
-  color: transparent;
+  color: var(--color-royal);
+}
+
+@utility shadow-hard {
+  box-shadow: 6px 6px 0 0 var(--color-navy-deep);
+}
+
+@utility shadow-hard-amber {
+  box-shadow: 6px 6px 0 0 var(--color-royal);
 }
 
 @utility reveal {
@@ -36,7 +49,6 @@
     transform: none;
   }
 }
-
 
 /*
  * Design system definition.
@@ -96,26 +108,26 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --radius: 0.3rem;
+  --background: oklch(0.974 0.014 84.58); /* warm cream, not clinical white */
+  --foreground: oklch(0.193 0.011 80.52); /* ink */
+  --card: oklch(0.99 0.006 85);
+  --card-foreground: oklch(0.193 0.011 80.52);
+  --popover: oklch(0.99 0.006 85);
+  --popover-foreground: oklch(0.193 0.011 80.52);
+  --primary: oklch(0.774 0.166 72.1); /* amber */
+  --primary-foreground: oklch(0.193 0.011 80.52);
+  --secondary: oklch(0.939 0.025 86.87);
+  --secondary-foreground: oklch(0.193 0.011 80.52);
+  --muted: oklch(0.915 0.033 85.48);
+  --muted-foreground: oklch(0.44 0.025 78);
+  --accent: oklch(0.915 0.033 85.48);
+  --accent-foreground: oklch(0.193 0.011 80.52);
+  --destructive: oklch(0.577 0.215 35);
+  --destructive-foreground: oklch(0.99 0.006 85);
+  --border: oklch(0.193 0.011 80.52 / 22%);
+  --input: oklch(0.193 0.011 80.52 / 22%);
+  --ring: oklch(0.774 0.166 72.1);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -167,6 +179,10 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
   * {
     border-color: var(--color-border);
   }

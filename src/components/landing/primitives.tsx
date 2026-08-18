@@ -56,7 +56,7 @@ export function WhatsAppCta({
 }: {
   id: string;
   message: string;
-  label: string;
+  label: ReactNode;
   phone?: string;
   variant?: "primary" | "outline" | "light";
   size?: "md" | "lg";
@@ -71,12 +71,12 @@ export function WhatsAppCta({
       rel="noopener noreferrer"
       onClick={() => trackCta(id)}
       className={cn(
-        "inline-flex items-center justify-center gap-2.5 rounded-full font-semibold tracking-tight transition-all duration-300 active:scale-[0.98]",
+        "inline-flex items-center justify-center gap-2.5 rounded-full font-bold tracking-tight transition-all duration-150 active:scale-[0.98]",
         size === "lg" ? "px-8 py-4 text-base" : "px-6 py-3 text-sm",
         variant === "primary" &&
-          "bg-whatsapp text-navy-deep shadow-[0_12px_30px_-10px_var(--color-whatsapp)] hover:brightness-110",
+          "border-2 border-navy-deep bg-whatsapp text-navy-deep shadow-[5px_5px_0_0_var(--color-navy-deep)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_0_var(--color-navy-deep)] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0_0_var(--color-navy-deep)]",
         variant === "outline" &&
-          "border border-cyan-accent/50 text-cyan-accent hover:bg-cyan-accent/10",
+          "border-2 border-cyan-accent text-cyan-accent hover:bg-cyan-accent hover:text-navy-deep",
         variant === "light" && "bg-background text-navy hover:bg-secondary",
         className,
       )}
