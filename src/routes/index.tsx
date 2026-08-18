@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Landing from "@/components/landing/Landing";
 
-const title = "Train the Trainer Programme 2026 | Mark Career Academy";
+const title = "Train the Trainer's Program 2026 | Mark Career Academy";
 const description =
-  "Train the Trainer Programme 2026 — 12 live sessions, 20 challenges, 3 mentors, bonus modules and lifetime mentoring. Only 30 seats. Chat on WhatsApp.";
+  "Train the Trainer's Program 2026 — 12 live sessions, 20 challenges, 3 mentors, bonus modules and lifetime mentoring. Only 30 seats. Chat on WhatsApp.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

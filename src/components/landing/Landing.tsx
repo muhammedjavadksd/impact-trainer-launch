@@ -46,6 +46,7 @@ import { Reveal, WhatsAppCta, SectionHeading } from "./primitives";
 import { WA_MESSAGES, PHONE, waLink, callLink, trackCta } from "@/lib/whatsapp";
 import photo1 from "@/assets/batch-photo-1.jpg";
 import photo2 from "@/assets/batch-photo-2.jpg";
+import mentorSuhail from "@/assets/mentor-suhail.png";
 
 const NAV = [
   { label: "About", href: "#about" },
@@ -58,8 +59,11 @@ const NAV = [
 ];
 
 const PHOTOS = [
-  { src: photo1, alt: "Previous batch participants of the Train the Trainer Programme in Calicut" },
-  { src: photo2, alt: "Trainers, teachers and professionals at a Train the Trainer batch" },
+  { src: photo1, alt: "Previous batch participants of the Train the Trainer's Program in Calicut" },
+  {
+    src: photo2,
+    alt: "Trainers, teachers and professionals at a Train the Trainer's Program batch",
+  },
 ];
 
 function Nav() {
@@ -99,7 +103,7 @@ function HeroImage() {
     <div className="overflow-hidden rounded-[2rem] border-2 border-background/20 shadow-hard-amber">
       <img
         src={photo1}
-        alt="Previous batch of the Train the Trainer Programme in Calicut"
+        alt="Previous batch of the Train the Trainer's Program in Calicut"
         className="h-[260px] w-full object-cover object-center sm:h-[420px]"
         loading="eager"
       />
@@ -114,13 +118,18 @@ function Hero({ heroRef }: { heroRef: RefObject<HTMLElement | null> }) {
       <div className="pointer-events-none absolute -right-8 top-40 hidden size-16 rotate-45 border-4 border-gold sm:block sm:size-24" />
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_0.95fr] lg:py-24">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border-2 border-navy-deep bg-royal px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-navy-deep">
-            2026 Edition · Calicut
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full border-2 border-navy-deep bg-royal px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-navy-deep">
+              2026 Edition · Calicut
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full border-2 border-background bg-transparent px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-background">
+              3 Days Residential Program
+            </span>
+          </div>
           <h1 className="mt-6 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-background sm:text-6xl lg:text-7xl">
             TRAIN THE
             <br />
-            <span className="text-gradient">TRAINER</span>
+            <span className="text-gradient">TRAINER&apos;S PROGRAM</span>
           </h1>
           <div className="mb-10 mt-6 lg:hidden">
             <HeroImage />
@@ -141,7 +150,7 @@ function Hero({ heroRef }: { heroRef: RefObject<HTMLElement | null> }) {
             Make your training engaging, practical and impactful — in just 1 month.
           </p>
           <p className="mt-5 text-sm font-bold uppercase tracking-[0.2em] text-gold">
-            Only 30 Seats · Early Bird Ends Nov 1
+            Only 30 Seats · Early Bird Offer
           </p>
         </Reveal>
         <Reveal delay={120} className="hidden lg:block">
@@ -159,7 +168,7 @@ function SocialProof() {
         <SectionHeading
           eyebrow="Previous Batch Participants"
           title="Real people. Real batches."
-          sub="People from different professions have already experienced the programme."
+          sub="People from different professions have already experienced the program."
         />
         <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-2 lg:overflow-visible">
           {PHOTOS.map((p, i) => (
@@ -220,7 +229,7 @@ function PainPoints() {
         <Reveal>
           <div className="surface-gradient mt-10 rounded-3xl p-8 text-center sm:p-10">
             <p className="font-display text-xl font-semibold leading-relaxed text-background sm:text-2xl">
-              <span className="text-cyan-accent">TRAIN THE TRAINER PROGRAMME</span> helps you make
+              <span className="text-cyan-accent">TRAIN THE TRAINER'S PROGRAM</span> helps you make
               your training more engaging, interactive, practical and impactful.
             </p>
             <div className="mt-7 flex justify-center">
@@ -296,7 +305,7 @@ function Transformation() {
           <div className="mt-10 grid items-center gap-8 rounded-3xl border-2 border-border bg-card p-6 lg:grid-cols-2">
             <img
               src={photo2}
-              alt="Participants practising during a previous Train the Trainer batch"
+              alt="Participants practising during a previous Train the Trainer's Program batch"
               loading="lazy"
               className="h-64 w-full rounded-2xl object-cover sm:h-80"
             />
@@ -341,7 +350,11 @@ function Stats() {
           {STATS.map((s, i) => (
             <Reveal key={s.l} delay={i * 90}>
               <div className="rounded-3xl border-2 border-royal bg-navy p-6 text-center">
-                <p className="font-display text-4xl font-extrabold text-cyan-accent sm:text-5xl">
+                <p
+                  className={`font-display font-extrabold text-cyan-accent ${
+                    s.n.length > 2 ? "text-2xl sm:text-3xl" : "text-4xl sm:text-5xl"
+                  }`}
+                >
                   {s.n}
                 </p>
                 <p className="mt-2 text-xs uppercase tracking-[0.2em] text-background/70">{s.l}</p>
@@ -524,7 +537,7 @@ function Format() {
   return (
     <section className="bg-background py-20">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
-        <SectionHeading eyebrow="Programme Format" title="Everything at a glance" />
+        <SectionHeading eyebrow="Program Format" title="Everything at a glance" />
         <div className="mt-10 divide-y divide-border overflow-hidden rounded-3xl border-2 border-border bg-card">
           {FORMAT.map((f, i) => (
             <Reveal key={f.k} delay={i * 40}>
@@ -542,7 +555,7 @@ function Format() {
             <WhatsAppCta
               id="format_whatsapp_cta"
               message={WA_MESSAGES.format}
-              label="Confirm Programme Format"
+              label="Confirm Program Format"
             />
           </div>
         </Reveal>
@@ -575,7 +588,7 @@ function Bonuses() {
         <SectionHeading
           eyebrow="Included"
           title="BONUS ADD-ONS"
-          sub="14 additional training modules included with the programme."
+          sub="14 additional training modules included with the program."
         />
         <div className="mt-10 grid gap-2.5 sm:grid-cols-2">
           {BONUSES.map((b, i) => (
@@ -683,7 +696,7 @@ function Longterm() {
     {
       icon: HeartHandshake,
       t: "Lifetime Mentoring",
-      d: "Continued mentoring after the programme.",
+      d: "Continued mentoring after the program.",
     },
     { icon: Award, t: "Certificate", d: "Certificate on course completion." },
   ];
@@ -728,12 +741,14 @@ function Mentors() {
       role: "Pilot Faculty",
       name: "Suhail C.P.",
       desc: "HRD Trainer & Life Coach",
+      photo: mentorSuhail,
       initials: "SC",
     },
     {
       role: "Co-Faculty",
       name: "Mark Team Members",
       desc: "Senior Trainers, Counsellors & Motivators",
+      photo: null,
       initials: "MT",
     },
   ];
@@ -744,15 +759,30 @@ function Mentors() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {mentors.map((m, i) => (
             <Reveal key={m.name} delay={i * 100}>
-              <div className="h-full rounded-3xl border-2 border-border bg-card p-7">
-                <div className="surface-gradient flex size-16 items-center justify-center rounded-2xl font-display text-lg font-bold text-background">
-                  {m.initials}
+              <div className="h-full overflow-hidden rounded-3xl border-2 border-border bg-card">
+                {m.photo ? (
+                  <div className="surface-gradient flex h-auto w-full items-end justify-center sm:h-[28rem]">
+                    <img
+                      src={m.photo}
+                      alt={m.name}
+                      loading="lazy"
+                      className="h-auto w-full object-contain sm:h-full"
+                    />
+                  </div>
+                ) : (
+                  <div className="p-7 pb-0">
+                    <div className="surface-gradient flex size-16 items-center justify-center rounded-2xl font-display text-lg font-bold text-background">
+                      {m.initials}
+                    </div>
+                  </div>
+                )}
+                <div className="p-7">
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-royal">
+                    {m.role}
+                  </p>
+                  <h3 className="mt-1 font-display text-xl font-bold text-navy-deep">{m.name}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{m.desc}</p>
                 </div>
-                <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-royal">
-                  {m.role}
-                </p>
-                <h3 className="mt-1 font-display text-xl font-bold text-navy-deep">{m.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{m.desc}</p>
               </div>
             </Reveal>
           ))}
@@ -885,7 +915,7 @@ function Pricing() {
 
 const FAQS: { q: string; a: string }[] = [
   {
-    q: "Who can attend the Train the Trainer Programme?",
+    q: "Who can attend the Train the Trainer's Program?",
     a: "Trainers, coaches, teachers, school leaders, social workers, parents, entrepreneurs, doctors, psychologists, advocates, police officers, government employees, students and anyone who trains, teaches, leads or influences people.",
   },
   {
@@ -897,7 +927,7 @@ const FAQS: { q: string; a: string }[] = [
     a: "1 month, 12 live sessions and 20 practical challenges (WhatsApp, audio, video, presentation and live), in Malayalam & English, with regular feedback.",
   },
   {
-    q: "What do I get with the programme?",
+    q: "What do I get with the program?",
     a: "14 bonus modules (Enneagram, Transactional Analysis, Public Speaking, Leadership Mastery and more), 2 TB+ of training resources, a Life Skills Training Kit, lifetime membership and mentoring, and a certificate on completion.",
   },
   {
@@ -947,7 +977,7 @@ function FinalCta() {
     <section className="relative overflow-hidden">
       <img
         src={photo1}
-        alt="Group photograph of a previous Train the Trainer batch"
+        alt="Group photograph of a previous Train the Trainer's Program batch"
         loading="lazy"
         className="absolute inset-0 size-full object-cover"
       />
@@ -983,7 +1013,7 @@ function Footer() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-3">
         <div>
           <p className="font-display text-lg font-bold text-background">Mark Career Academy</p>
-          <p className="mt-2 text-sm text-background/60">Train the Trainer Programme</p>
+          <p className="mt-2 text-sm text-background/60">Train the Trainer's Program</p>
         </div>
         <div className="space-y-2 text-sm text-background/70">
           <a
