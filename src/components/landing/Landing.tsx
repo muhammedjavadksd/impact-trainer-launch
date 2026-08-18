@@ -59,10 +59,10 @@ const NAV = [
 ];
 
 const PHOTOS = [
-  { src: photo1, alt: "Previous batch participants of the Train the Trainer's Program in Calicut" },
+  { src: photo1, alt: "Previous batch participants of the Train the Trainer Program in Calicut" },
   {
     src: photo2,
-    alt: "Trainers, teachers and professionals at a Train the Trainer's Program batch",
+    alt: "Trainers, teachers and professionals at a Train the Trainer Program batch",
   },
 ];
 
@@ -103,7 +103,7 @@ function HeroImage() {
     <div className="overflow-hidden rounded-[2rem] border-2 border-background/20 shadow-hard-amber">
       <img
         src={photo1}
-        alt="Previous batch of the Train the Trainer's Program in Calicut"
+        alt="Previous batch of the Train the Trainer Program in Calicut"
         className="h-[260px] w-full object-cover object-center sm:h-[420px]"
         loading="eager"
       />
@@ -129,7 +129,7 @@ function Hero({ heroRef }: { heroRef: RefObject<HTMLElement | null> }) {
           <h1 className="mt-6 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-background sm:text-6xl lg:text-7xl">
             TRAIN THE
             <br />
-            <span className="text-gradient">TRAINER&apos;S PROGRAM</span>
+            <span className="text-gradient">TRAINER PROGRAM</span>
           </h1>
           <div className="mb-10 mt-6 lg:hidden">
             <HeroImage />
@@ -229,7 +229,7 @@ function PainPoints() {
         <Reveal>
           <div className="surface-gradient mt-10 rounded-3xl p-8 text-center sm:p-10">
             <p className="font-display text-xl font-semibold leading-relaxed text-background sm:text-2xl">
-              <span className="text-cyan-accent">TRAIN THE TRAINER'S PROGRAM</span> helps you make
+              <span className="text-cyan-accent">TRAIN THE TRAINER PROGRAM</span> helps you make
               your training more engaging, interactive, practical and impactful.
             </p>
             <div className="mt-7 flex justify-center">
@@ -305,7 +305,7 @@ function Transformation() {
           <div className="mt-10 grid items-center gap-8 rounded-3xl border-2 border-border bg-card p-6 lg:grid-cols-2">
             <img
               src={photo2}
-              alt="Participants practising during a previous Train the Trainer's Program batch"
+              alt="Participants practising during a previous Train the Trainer Program batch"
               loading="lazy"
               className="h-64 w-full rounded-2xl object-cover sm:h-80"
             />
@@ -915,7 +915,7 @@ function Pricing() {
 
 const FAQS: { q: string; a: string }[] = [
   {
-    q: "Who can attend the Train the Trainer's Program?",
+    q: "Who can attend the Train the Trainer Program?",
     a: "Trainers, coaches, teachers, school leaders, social workers, parents, entrepreneurs, doctors, psychologists, advocates, police officers, government employees, students and anyone who trains, teaches, leads or influences people.",
   },
   {
@@ -977,7 +977,7 @@ function FinalCta() {
     <section className="relative overflow-hidden">
       <img
         src={photo1}
-        alt="Group photograph of a previous Train the Trainer's Program batch"
+        alt="Group photograph of a previous Train the Trainer Program batch"
         loading="lazy"
         className="absolute inset-0 size-full object-cover"
       />
@@ -1013,7 +1013,7 @@ function Footer() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-3">
         <div>
           <p className="font-display text-lg font-bold text-background">Mark Career Academy</p>
-          <p className="mt-2 text-sm text-background/60">Train the Trainer's Program</p>
+          <p className="mt-2 text-sm text-background/60">Train the Trainer Program</p>
         </div>
         <div className="space-y-2 text-sm text-background/70">
           <a
